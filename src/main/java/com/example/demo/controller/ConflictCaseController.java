@@ -1,45 +1,45 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.ConflictCase;
-import com.example.demo.service.ConflictCaseService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/conflict-cases")
+@RequestMapping("/conflict-cases")
 public class ConflictCaseController {
 
-    private final ConflictCaseService conflictCaseService;
+    // Temporary in-memory list (until service + repository are added)
+    private final List<ConflictCase> conflictCases = new ArrayList<>();
 
-    public ConflictCaseController(ConflictCaseService conflictCaseService) {
-        this.conflictCaseService = conflictCaseService;
-    }
-
+    // CREATE
     @PostMapping
-    public ConflictCase create(@RequestBody ConflictCase conflictCase) {
-        return conflictCaseService.createCase(conflictCase);
+    public ConflictCase createConflictCase(@RequestBody ConflictCase conflictCase) {
+        conflictCases.add(conflictCase);
+        return conflictCase;
     }
 
-    @PutMapping("/{id}/status")
-    public ConflictCase updateStatus(
-            @PathVariable Long id,
-            @RequestParam String status) {
-        return conflictCaseService.updateCaseStatus(id, status);
-    }
-
-    @GetMapping("/{id}")
-    public ConflictCase getById(@PathVariable Long id) {
-        return conflictCaseService.getCaseById(id);
-    }
-
-    @GetMapping("/person/{personId}")
-    public List<ConflictCase> getByPerson(@PathVariable Long personId) {
-        return conflictCaseService.getCasesByPerson(personId);
-    }
-
+    // READ ALL
     @GetMapping
-    public List<ConflictCase> getAll() {
-        return conflictCaseService.getAllCases();
+    public List<ConflictCase> getAllConflictCases() {
+        return conflictCases;
+    }
+
+    // READ BY INDEX (temporary)
+    @GetMapping("/{index}")
+    public ConflictCase getConflictCase(@PathVariable int index) {
+        return conflictCases.get(index);
+    }
+
+    // UPDATE STATUS
+    @PutMapping("/{index}/status")
+    public ConflictCase updateStatus(
+            @PathVariable int index,
+            @RequestParam String status) {
+
+        ConflictCase conflictCase = conflictCases.get(index);
+        conflictCase.setStatus(status);
+        return conflictCase;
     }
 }
