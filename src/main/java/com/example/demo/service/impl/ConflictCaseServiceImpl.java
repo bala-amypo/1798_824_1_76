@@ -5,6 +5,7 @@ import com.example.demo.exception.ApiException;
 import com.example.demo.repository.ConflictCaseRepository;
 import com.example.demo.service.ConflictCaseService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -16,27 +17,33 @@ public class ConflictCaseServiceImpl implements ConflictCaseService {
         this.repo = repo;
     }
 
+    @Override
     public ConflictCase createCase(ConflictCase c) {
         return repo.save(c);
     }
 
-    public ConflictCase updateCaseStatus(Long id, String status) {
-        ConflictCase c = repo.findById(id)
-                .orElseThrow(() -> new ApiException("Missing case"));
+    @Override
+    public ConflictCase updateStatus(Long caseId, String status) {
+        ConflictCase c = repo.findById(caseId)
+                .orElseThrow(() -> new ApiException("case"));
         c.setStatus(status);
         return repo.save(c);
     }
 
-    public List<ConflictCase> getCasesByPerson(Long id) {
-        return repo.findByPrimaryPersonIdOrSecondaryPersonId(id, id);
+    @Override
+    public List<ConflictCase> getByPerson(Long personId) {
+        return repo.findByPrimaryPersonIdOrSecondaryPersonId(personId, personId);
     }
 
-    public ConflictCase getCaseById(Long id) {
+    @Override
+    public ConflictCase getById(Long id) {
         return repo.findById(id)
-                .orElseThrow(() -> new ApiException("Missing case"));
+                .orElseThrow(() -> new ApiException("case"));
     }
 
-    public List<ConflictCase> getAllCases() {
+    @Override
+    public List<ConflictCase> getAll() {
         return repo.findAll();
     }
 }
+    

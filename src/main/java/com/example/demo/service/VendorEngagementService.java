@@ -4,8 +4,8 @@ import com.example.demo.entity.VendorEngagementRecord;
 import java.util.List;
 
 public interface VendorEngagementService {
-    VendorEngagementRecord addEngagement(VendorEngagementRecord r);
-    List<VendorEngagementRecord> getEngagementsByEmployee(Long id);
-    List<VendorEngagementRecord> getEngagementsByVendor(Long id);
-    List<VendorEngagementRecord> getAllEngagements();
+    VendorEngagementRecord addEngagement(VendorEngagementRecord record);
+    List<VendorEngagementRecord> getByEmployee(Long employeeId);
+    List<VendorEngagementRecord> getByVendor(Long vendorId);
+    List<VendorEngagementRecord> getAll();
 }

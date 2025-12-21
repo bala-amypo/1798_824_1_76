@@ -5,6 +5,7 @@ import com.example.demo.exception.ApiException;
 import com.example.demo.repository.ConflictFlagRepository;
 import com.example.demo.service.ConflictFlagService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -16,20 +17,24 @@ public class ConflictFlagServiceImpl implements ConflictFlagService {
         this.repo = repo;
     }
 
-    public ConflictFlag addFlag(ConflictFlag f) {
-        return repo.save(f);
+    @Override
+    public ConflictFlag addFlag(ConflictFlag flag) {
+        return repo.save(flag);
     }
 
-    public List<ConflictFlag> getFlagsByCase(Long id) {
-        return repo.findByCaseId(id);
+    @Override
+    public List<ConflictFlag> getByCase(Long caseId) {
+        return repo.findByCaseId(caseId);
     }
 
-    public ConflictFlag getFlagById(Long id) {
+    @Override
+    public ConflictFlag getById(Long id) {
         return repo.findById(id)
-                .orElseThrow(() -> new ApiException("Missing flag"));
+                .orElseThrow(() -> new ApiException("flag"));
     }
 
-    public List<ConflictFlag> getAllFlags() {
+    @Override
+    public List<ConflictFlag> getAll() {
         return repo.findAll();
     }
 }

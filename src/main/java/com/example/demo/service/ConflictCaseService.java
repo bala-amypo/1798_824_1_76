@@ -4,9 +4,9 @@ import com.example.demo.entity.ConflictCase;
 import java.util.List;
 
 public interface ConflictCaseService {
-    ConflictCase createCase(ConflictCase c);
-    ConflictCase updateCaseStatus(Long id, String status);
-    List<ConflictCase> getCasesByPerson(Long id);
-    ConflictCase getCaseById(Long id);
-    List<ConflictCase> getAllCases();
+    ConflictCase createCase(ConflictCase conflictCase);
+    ConflictCase updateStatus(Long caseId, String status);
+    List<ConflictCase> getByPerson(Long personId);
+    ConflictCase getById(Long id);
+    List<ConflictCase> getAll();
 }

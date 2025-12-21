@@ -4,6 +4,7 @@ import com.example.demo.entity.VendorEngagementRecord;
 import com.example.demo.repository.VendorEngagementRecordRepository;
 import com.example.demo.service.VendorEngagementService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -15,19 +16,24 @@ public class VendorEngagementServiceImpl implements VendorEngagementService {
         this.repo = repo;
     }
 
-    public VendorEngagementRecord addEngagement(VendorEngagementRecord r) {
-        return repo.save(r);
+    @Override
+    public VendorEngagementRecord addEngagement(VendorEngagementRecord record) {
+        return repo.save(record);
     }
 
-    public List<VendorEngagementRecord> getEngagementsByEmployee(Long id) {
-        return repo.findByEmployeeId(id);
+    @Override
+    public List<VendorEngagementRecord> getByEmployee(Long employeeId) {
+        return repo.findByEmployeeId(employeeId);
     }
 
-    public List<VendorEngagementRecord> getEngagementsByVendor(Long id) {
-        return repo.findByVendorId(id);
+    @Override
+    public List<VendorEngagementRecord> getByVendor(Long vendorId) {
+        return repo.findByVendorId(vendorId);
     }
 
-    public List<VendorEngagementRecord> getAllEngagements() {
+    @Override
+    public List<VendorEngagementRecord> getAll() {
         return repo.findAll();
     }
 }
+    
