@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ConflictFlagRepository
         extends JpaRepository<ConflictFlag, Long> {
-    List<ConflictFlag> findByCaseId(Long id);
+    List<ConflictFlag> findByCaseId(Long caseId);
 }

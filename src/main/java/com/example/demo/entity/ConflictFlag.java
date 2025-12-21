@@ -22,4 +22,6 @@ public class ConflictFlag {
     private LocalDateTime flaggedAt = LocalDateTime.now();
 
     public Long getId() { return id; }
+    public Long getCaseId() { return caseId; }
+    public void setCaseId(Long caseId) { this.caseId = caseId; }
 }

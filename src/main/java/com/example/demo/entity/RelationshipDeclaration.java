@@ -18,11 +18,12 @@ public class RelationshipDeclaration {
     private String relatedPersonName;
     private String relationshipType;
     private String description;
-
     private Boolean isVerified = false;
     private LocalDateTime declaredAt = LocalDateTime.now();
 
     public Long getId() { return id; }
     public Long getPersonId() { return personId; }
+    public void setPersonId(Long personId) { this.personId = personId; }
+    public Boolean getIsVerified() { return isVerified; }
     public void setIsVerified(Boolean verified) { isVerified = verified; }
 }
