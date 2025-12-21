@@ -10,7 +10,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ApiException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleApiException(ApiException ex) {
+    public String handle(ApiException ex) {
         return ex.getMessage();
     }
 }
