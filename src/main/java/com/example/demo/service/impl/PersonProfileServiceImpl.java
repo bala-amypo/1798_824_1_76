@@ -16,31 +16,31 @@ public class PersonProfileServiceImpl implements PersonProfileService {
         this.repo = repo;
     }
 
-    public PersonProfile createPerson(PersonProfile p) {
+    public PersonProfile create(PersonProfile p) {
         if (repo.findByEmail(p.getEmail()).isPresent())
-            throw new ApiException("Duplicate email");
+            throw new ApiException("email");
         if (repo.findByReferenceId(p.getReferenceId()).isPresent())
-            throw new ApiException("Duplicate reference");
+            throw new ApiException("reference");
         return repo.save(p);
     }
 
-    public PersonProfile getPersonById(Long id) {
+    public PersonProfile getById(Long id) {
         return repo.findById(id)
-                .orElseThrow(() -> new ApiException("Missing person"));
+                .orElseThrow(() -> new ApiException("person"));
     }
 
-    public List<PersonProfile> getAllPersons() {
+    public List<PersonProfile> getAll() {
         return repo.findAll();
     }
 
-    public PersonProfile findByReferenceId(String ref) {
-        return repo.findByReferenceId(ref)
-                .orElseThrow(() -> new ApiException("Missing person"));
-    }
-
-    public PersonProfile updateRelationshipDeclared(Long id, boolean declared) {
-        PersonProfile p = getPersonById(id);
+    public PersonProfile updateRelationshipDeclared(Long id, Boolean declared) {
+        PersonProfile p = getById(id);
         p.setRelationshipDeclared(declared);
         return repo.save(p);
+    }
+
+    public PersonProfile findByReferenceId(String referenceId) {
+        return repo.findByReferenceId(referenceId)
+                .orElseThrow(() -> new ApiException("person"));
     }
 }

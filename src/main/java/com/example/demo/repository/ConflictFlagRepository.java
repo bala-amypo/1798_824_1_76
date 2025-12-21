@@ -1,10 +1,13 @@
-package com.example.demo.repository;
+package com.example.demo.service;
 
-import com.example.demo.entity.ConflictFlag;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.demo.entity.PersonProfile;
 import java.util.List;
 
-public interface ConflictFlagRepository
-        extends JpaRepository<ConflictFlag, Long> {
-    List<ConflictFlag> findByCaseId(Long caseId);
+public interface PersonProfileService {
+    PersonProfile create(PersonProfile p);
+    PersonProfile getById(Long id);
+    List<PersonProfile> getAll();
+    PersonProfile updateRelationshipDeclared(Long id, Boolean declared);
+    PersonProfile findByReferenceId(String referenceId);
 }
+    

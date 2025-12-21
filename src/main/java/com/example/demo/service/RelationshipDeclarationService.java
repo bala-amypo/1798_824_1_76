@@ -4,8 +4,8 @@ import com.example.demo.entity.RelationshipDeclaration;
 import java.util.List;
 
 public interface RelationshipDeclarationService {
-    RelationshipDeclaration declareRelationship(RelationshipDeclaration d);
-    List<RelationshipDeclaration> getDeclarationsByPerson(Long id);
-    RelationshipDeclaration verifyDeclaration(Long id, boolean verified);
+    RelationshipDeclaration declareRelationship(RelationshipDeclaration declaration);
+    List<RelationshipDeclaration> getDeclarationsByPerson(Long personId);
+    RelationshipDeclaration verifyDeclaration(Long declarationId, Boolean verified);
     List<RelationshipDeclaration> getAllDeclarations();
 }
