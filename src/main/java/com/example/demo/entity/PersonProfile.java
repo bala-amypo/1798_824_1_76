@@ -1,8 +1,20 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import java.time.LocalDateTime;
+
 @Entity
-@Table(uniqueConstraints = {
+@Table(
+    uniqueConstraints = {
         @UniqueConstraint(columnNames = "email"),
         @UniqueConstraint(columnNames = "referenceId")
-})
+    }
+)
 public class PersonProfile {
 
     @Id
@@ -17,4 +29,14 @@ public class PersonProfile {
 
     private Boolean relationshipDeclared = false;
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public Long getId() { return id; }
+    public String getReferenceId() { return referenceId; }
+    public void setReferenceId(String referenceId) { this.referenceId = referenceId; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public Boolean getRelationshipDeclared() { return relationshipDeclared; }
+    public void setRelationshipDeclared(Boolean relationshipDeclared) {
+        this.relationshipDeclared = relationshipDeclared;
+    }
 }
