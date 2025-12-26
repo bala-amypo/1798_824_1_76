@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.PersonProfile;
+import com.example.demo.model.PersonProfile;
 import com.example.demo.service.PersonProfileService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/persons")
@@ -16,28 +18,20 @@ public class PersonProfileController {
     }
 
     @PostMapping
-    public PersonProfile create(@RequestBody PersonProfile p) {
-        return service.create(p);
+    public ResponseEntity<PersonProfile> create(@RequestBody PersonProfile person) {
+        PersonProfile created = service.createPerson(person);
+        return ResponseEntity.ok(created);
     }
 
     @GetMapping("/{id}")
-    public PersonProfile get(@PathVariable Long id) {
-        return service.getById(id);
-    }
-
-    @GetMapping
-    public List<PersonProfile> getAll() {
-        return service.getAll();
-    }
-
-    @PutMapping("/{id}/relationship-declared")
-    public PersonProfile update(@PathVariable Long id,
-                                @RequestParam Boolean declared) {
-        return service.updateRelationshipDeclared(id, declared);
+    public ResponseEntity<PersonProfile> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getPersonById(id));
     }
 
     @GetMapping("/lookup/{referenceId}")
-    public PersonProfile lookup(@PathVariable String referenceId) {
-        return service.findByReferenceId(referenceId);
+    public ResponseEntity<PersonProfile> lookup(@PathVariable String referenceId) {
+        Optional<PersonProfile> p = service.findByReferenceId(referenceId);
+        return p.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
