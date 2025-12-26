@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.model.RelationshipDeclaration;
-
 import java.util.List;
 
 public interface RelationshipDeclarationService {
@@ -11,4 +10,7 @@ public interface RelationshipDeclarationService {
     RelationshipDeclaration verifyDeclaration(Long id, boolean verified);
 
     List<RelationshipDeclaration> getAllDeclarations();
+
+
+    List<RelationshipDeclaration> getDeclarationsByPerson(Long personId);
 }

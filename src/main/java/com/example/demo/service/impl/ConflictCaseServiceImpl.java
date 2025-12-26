@@ -10,46 +10,46 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service 
 public class ConflictCaseServiceImpl implements ConflictCaseService {
 
-    private final ConflictCaseRepository repo;
+    private final ConflictCaseRepository caseRepo;
     private final ConflictFlagRepository flagRepo;
 
-    public ConflictCaseServiceImpl(ConflictCaseRepository repo,
+    public ConflictCaseServiceImpl(ConflictCaseRepository caseRepo,
                                    ConflictFlagRepository flagRepo) {
-        this.repo = repo;
+        this.caseRepo = caseRepo;
         this.flagRepo = flagRepo;
     }
 
     @Override
     public ConflictCase createCase(ConflictCase c) {
-        if (c.getStatus() == null)
+        if (c.getStatus() == null) {
             c.setStatus("OPEN");
-
-        return repo.save(c);
+        }
+        return caseRepo.save(c);
     }
 
     @Override
     public ConflictCase updateCaseStatus(Long id, String status) {
-        ConflictCase c = repo.findById(id)
+        ConflictCase c = caseRepo.findById(id)
                 .orElseThrow(() -> new ApiException("Case not found"));
         c.setStatus(status);
-        return repo.save(c);
+        return caseRepo.save(c);
     }
 
     @Override
     public List<ConflictCase> getCasesByPerson(Long personId) {
-        return repo.findByPrimaryPersonIdOrSecondaryPersonId(personId, personId);
+        return caseRepo.findByPrimaryPersonIdOrSecondaryPersonId(personId, personId);
     }
 
     @Override
     public Optional<ConflictCase> getCaseById(Long id) {
-        return repo.findById(id);
+        return caseRepo.findById(id);
     }
 
     @Override
     public List<ConflictCase> getAllCases() {
-        return repo.findAll();
+        return caseRepo.findAll();
     }
 }

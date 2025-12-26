@@ -10,8 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class RelationshipDeclarationServiceImpl implements RelationshipDeclarationService {
+@Service  // ⭐ REQUIRED
+public class RelationshipDeclarationServiceImpl
+        implements RelationshipDeclarationService {
 
     private final RelationshipDeclarationRepository repo;
     private final PersonProfileRepository personRepo;
@@ -40,7 +41,6 @@ public class RelationshipDeclarationServiceImpl implements RelationshipDeclarati
     public RelationshipDeclaration verifyDeclaration(Long id, boolean verified) {
         RelationshipDeclaration d = repo.findById(id)
                 .orElseThrow(() -> new ApiException("Declaration not found"));
-
         d.setIsVerified(verified);
         return repo.save(d);
     }
@@ -48,5 +48,11 @@ public class RelationshipDeclarationServiceImpl implements RelationshipDeclarati
     @Override
     public List<RelationshipDeclaration> getAllDeclarations() {
         return repo.findAll();
+    }
+
+
+    @Override
+    public List<RelationshipDeclaration> getDeclarationsByPerson(Long personId) {
+        return repo.findByPersonId(personId);
     }
 }
