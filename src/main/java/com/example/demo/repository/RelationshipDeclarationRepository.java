@@ -1,16 +1,14 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.RelationshipDeclaration;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
-import java.util.Optional;
 
-public interface RelationshipDeclarationRepository {
-
-    Optional<RelationshipDeclaration> findById(Long id);
+@Repository
+public interface RelationshipDeclarationRepository
+        extends JpaRepository<RelationshipDeclaration, Long> {
 
     List<RelationshipDeclaration> findByPersonId(Long personId);
-
-    List<RelationshipDeclaration> findAll();
-
-    RelationshipDeclaration save(RelationshipDeclaration declaration);
 }
