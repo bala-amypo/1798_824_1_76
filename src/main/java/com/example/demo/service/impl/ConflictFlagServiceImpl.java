@@ -6,9 +6,11 @@ import com.example.demo.model.ConflictFlag;
 import com.example.demo.repository.ConflictCaseRepository;
 import com.example.demo.repository.ConflictFlagRepository;
 import com.example.demo.service.ConflictFlagService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ConflictFlagServiceImpl implements ConflictFlagService {
 
     private final ConflictFlagRepository repo;
@@ -21,17 +23,18 @@ public class ConflictFlagServiceImpl implements ConflictFlagService {
     }
 
     @Override
-    public ConflictFlag addFlag(ConflictFlag flag) {
+    public ConflictFlag addFlag(ConflictFlag f) {
+        ConflictCase c = caseRepo.findById(f.getCaseId())
+                .orElseThrow(() -> new ApiException("Case not found"));
 
-        ConflictCase c = caseRepo.findById(flag.getCaseId())
-                .orElseThrow(() -> new ApiException("ConflictCase not found"));
+        ConflictFlag saved = repo.save(f);
 
-        if ("HIGH".equalsIgnoreCase(flag.getSeverity())) {
+        if ("HIGH".equalsIgnoreCase(f.getSeverity())) {
             c.setRiskLevel("HIGH");
             caseRepo.save(c);
         }
 
-        return repo.save(flag);
+        return saved;
     }
 
     @Override

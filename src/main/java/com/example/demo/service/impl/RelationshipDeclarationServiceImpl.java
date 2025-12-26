@@ -6,9 +6,11 @@ import com.example.demo.model.RelationshipDeclaration;
 import com.example.demo.repository.PersonProfileRepository;
 import com.example.demo.repository.RelationshipDeclarationRepository;
 import com.example.demo.service.RelationshipDeclarationService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class RelationshipDeclarationServiceImpl implements RelationshipDeclarationService {
 
     private final RelationshipDeclarationRepository repo;
@@ -21,28 +23,26 @@ public class RelationshipDeclarationServiceImpl implements RelationshipDeclarati
     }
 
     @Override
-    public RelationshipDeclaration declareRelationship(RelationshipDeclaration declaration) {
-
-        PersonProfile p = personRepo.findById(declaration.getPersonId())
+    public RelationshipDeclaration declareRelationship(RelationshipDeclaration d) {
+        PersonProfile p = personRepo.findById(d.getPersonId())
                 .orElseThrow(() -> new ApiException("Person not found"));
+
+        d.setIsVerified(false);
+        RelationshipDeclaration saved = repo.save(d);
 
         p.setRelationshipDeclared(true);
         personRepo.save(p);
 
-        return repo.save(declaration);
+        return saved;
     }
 
     @Override
     public RelationshipDeclaration verifyDeclaration(Long id, boolean verified) {
         RelationshipDeclaration d = repo.findById(id)
                 .orElseThrow(() -> new ApiException("Declaration not found"));
+
         d.setIsVerified(verified);
         return repo.save(d);
-    }
-
-    @Override
-    public List<RelationshipDeclaration> getDeclarationsByPerson(Long personId) {
-        return repo.findByPersonId(personId);
     }
 
     @Override
