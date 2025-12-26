@@ -1,12 +1,18 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.PersonProfile;
+import com.example.demo.model.PersonProfile;
 import java.util.List;
+import java.util.Optional;
 
 public interface PersonProfileService {
-    PersonProfile create(PersonProfile p);
-    PersonProfile getById(Long id);
-    List<PersonProfile> getAll();
-    PersonProfile updateRelationshipDeclared(Long id, Boolean declared);
-    PersonProfile findByReferenceId(String referenceId);
+
+    PersonProfile createPerson(PersonProfile person);
+
+    PersonProfile getPersonById(Long id);
+
+    PersonProfile updateRelationshipDeclared(Long id, boolean declared);
+
+    List<PersonProfile> getAllPersons();
+
+    Optional<PersonProfile> findByReferenceId(String referenceId);
 }
