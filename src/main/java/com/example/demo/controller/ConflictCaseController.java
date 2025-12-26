@@ -1,10 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.ConflictCase;
+import com.example.demo.model.ConflictCase;
 import com.example.demo.service.ConflictCaseService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/conflict-cases")
@@ -24,21 +25,21 @@ public class ConflictCaseController {
     @PutMapping("/{id}/status")
     public ConflictCase updateStatus(@PathVariable Long id,
                                      @RequestParam String status) {
-        return service.updateStatus(id, status);
+        return service.updateCaseStatus(id, status);
     }
 
     @GetMapping("/person/{personId}")
     public List<ConflictCase> byPerson(@PathVariable Long personId) {
-        return service.getByPerson(personId);
+        return service.getCasesByPerson(personId);
     }
 
     @GetMapping("/{id}")
-    public ConflictCase get(@PathVariable Long id) {
-        return service.getById(id);
+    public Optional<ConflictCase> get(@PathVariable Long id) {
+        return service.getCaseById(id);
     }
 
     @GetMapping
     public List<ConflictCase> all() {
-        return service.getAll();
+        return service.getAllCases();
     }
 }

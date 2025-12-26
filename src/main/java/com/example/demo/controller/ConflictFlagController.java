@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.ConflictFlag;
+import com.example.demo.model.ConflictFlag;
 import com.example.demo.service.ConflictFlagService;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,16 +23,16 @@ public class ConflictFlagController {
 
     @GetMapping("/case/{caseId}")
     public List<ConflictFlag> byCase(@PathVariable Long caseId) {
-        return service.getByCase(caseId);
+        return service.getFlagsByCase(caseId);
     }
 
     @GetMapping("/{id}")
     public ConflictFlag get(@PathVariable Long id) {
-        return service.getById(id);
+        return service.getFlagById(id);
     }
 
     @GetMapping
     public List<ConflictFlag> all() {
-        return service.getAll();
+        return service.getAllFlags();
     }
 }

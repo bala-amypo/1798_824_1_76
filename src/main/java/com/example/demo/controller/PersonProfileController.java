@@ -19,8 +19,7 @@ public class PersonProfileController {
 
     @PostMapping
     public ResponseEntity<PersonProfile> create(@RequestBody PersonProfile person) {
-        PersonProfile created = service.createPerson(person);
-        return ResponseEntity.ok(created);
+        return ResponseEntity.ok(service.createPerson(person));
     }
 
     @GetMapping("/{id}")

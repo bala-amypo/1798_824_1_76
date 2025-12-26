@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.RelationshipDeclaration;
+import com.example.demo.model.RelationshipDeclaration;
 import com.example.demo.service.RelationshipDeclarationService;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +28,7 @@ public class RelationshipDeclarationController {
 
     @PutMapping("/{id}/verify")
     public RelationshipDeclaration verify(@PathVariable Long id,
-                                          @RequestParam Boolean verified) {
+                                          @RequestParam boolean verified) {
         return service.verifyDeclaration(id, verified);
     }
 

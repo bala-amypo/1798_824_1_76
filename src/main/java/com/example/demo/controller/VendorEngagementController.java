@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.VendorEngagementRecord;
+import com.example.demo.model.VendorEngagementRecord;
 import com.example.demo.service.VendorEngagementService;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,16 +23,16 @@ public class VendorEngagementController {
 
     @GetMapping("/employee/{employeeId}")
     public List<VendorEngagementRecord> byEmployee(@PathVariable Long employeeId) {
-        return service.getByEmployee(employeeId);
+        return service.getEngagementsByEmployee(employeeId);
     }
 
     @GetMapping("/vendor/{vendorId}")
     public List<VendorEngagementRecord> byVendor(@PathVariable Long vendorId) {
-        return service.getByVendor(vendorId);
+        return service.getEngagementsByVendor(vendorId);
     }
 
     @GetMapping
     public List<VendorEngagementRecord> all() {
-        return service.getAll();
+        return service.getAllEngagements();
     }
 }
