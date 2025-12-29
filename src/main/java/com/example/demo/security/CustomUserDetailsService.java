@@ -1,33 +1,29 @@
 package com.example.demo.security;
 
+import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 import org.springframework.security.core.userdetails.*;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.stereotype.Service;
 
-public class CustomUserDetailsService implements UserDetailsService {
+@Service
+public class CustomUserDetailsService
+        implements UserDetailsService {
 
-    private final Map<String, UserPrincipal> users = new HashMap<>();
-    private final AtomicLong idGen = new AtomicLong(1);
+    private final UserRepository userRepository;
 
-    public UserPrincipal register(String email, String password, String role) {
-        UserPrincipal user = new UserPrincipal(
-                idGen.getAndIncrement(),
-                email,
-                password,
-                role
-        );
-        users.put(email, user);
-        return user;
+    public CustomUserDetailsService(
+            UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
 
-        UserPrincipal user = users.get(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        return user;
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException("User not found"));
+
+        return UserPrincipal.create(user);
     }
 }

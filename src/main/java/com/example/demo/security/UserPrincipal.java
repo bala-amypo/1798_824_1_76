@@ -1,40 +1,38 @@
 package com.example.demo.security;
 
+import com.example.demo.model.User;
 import org.springframework.security.core.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
 import java.util.List;
 
 public class UserPrincipal implements UserDetails {
 
-    private final Long id;
     private final String username;
     private final String password;
-    private final String role;
+    private final List<GrantedAuthority> authorities;
 
-    public UserPrincipal(Long id, String username, String password, String role) {
-        this.id = id;
+    private UserPrincipal(String username,
+                          String password,
+                          List<GrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.authorities = authorities;
     }
 
-    public Long getId() {
-        return id;
+    public static UserPrincipal create(User user) {
+        return new UserPrincipal(
+                user.getEmail(),
+                user.getPassword(),
+                List.of(new SimpleGrantedAuthority(user.getRole()))
+        );
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(() -> "ROLE_" + role);
-    }
-
-    @Override public String getPassword() { return password; }
     @Override public String getUsername() { return username; }
+    @Override public String getPassword() { return password; }
+    @Override public List<GrantedAuthority> getAuthorities() { return authorities; }
+
     @Override public boolean isAccountNonExpired() { return true; }
     @Override public boolean isAccountNonLocked() { return true; }
     @Override public boolean isCredentialsNonExpired() { return true; }
