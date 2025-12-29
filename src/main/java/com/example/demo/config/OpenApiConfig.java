@@ -17,7 +17,7 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
 
         SecurityScheme jwtScheme = new SecurityScheme()
-                .name("Authorization")
+                .name("bearerAuth")               // 🔥 MUST MATCH
                 .type(SecurityScheme.Type.HTTP)
                 .scheme("bearer")
                 .bearerFormat("JWT");
@@ -28,7 +28,6 @@ public class OpenApiConfig {
                         .version("1.0")
                         .description("JWT secured backend APIs")
                 )
-                
                 .servers(List.of(
                         new Server().url("https://9220.pro604cr.amypo.ai")
                 ))
