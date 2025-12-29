@@ -17,7 +17,7 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
 
         SecurityScheme jwtScheme = new SecurityScheme()
-                .name("bearerAuth")               // 🔥 MUST MATCH
+                .name("bearerAuth")               
                 .type(SecurityScheme.Type.HTTP)
                 .scheme("bearer")
                 .bearerFormat("JWT");
