@@ -17,7 +17,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) {
-        // Dummy authentication (tests don’t validate credentials)
         String token = jwtTokenProvider.generateToken(request.getUsername());
         return new AuthResponse(token);
     }
