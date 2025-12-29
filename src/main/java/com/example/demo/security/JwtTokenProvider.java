@@ -1,37 +1,57 @@
 package com.example.demo.security;
 
-import org.springframework.stereotype.Component;
-import java.util.Map;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 
-@Component
+import java.security.Key;
+import java.util.Date;
+
 public class JwtTokenProvider {
 
-    public JwtTokenProvider() {
-        // EMPTY constructor – required by tests
+    private final Key key;
+    private final long expirationMs;
+
+    public JwtTokenProvider(String secret, long expirationMs) {
+        
+        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+        this.expirationMs = expirationMs;
     }
 
-    // Overloaded constructor found in logs [70,28]
-    public JwtTokenProvider(String secret, long expiration) {
-        // Do nothing with these values
+   
+    public String generateToken(UserPrincipal userPrincipal) {
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + expirationMs);
+
+        return Jwts.builder()
+                .setSubject(userPrincipal.getUsername()) 
+                .claim("role", userPrincipal.getRole())
+                .setIssuedAt(now)
+                .setExpiration(expiry)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
     }
 
-    // Fix for error [375,40] and [720,40]: 
-    // Added a version that accepts UserPrincipal as an argument
-    public String generateToken(Object userPrincipal) {
-        return "dummy-jwt-token";
-    }
-
-    public String generateToken(Map<String, Object> claims, String username) {
-        return "dummy-jwt-token";
-    }
-
-    // Fix for error [377,43] and [393,44]
-    public boolean validateToken(String token) {
-        return true; 
-    }
-
-    // Fix for error [386,43] and [721,43]
+    
     public String getUsernameFromToken(String token) {
-        return "testUser";
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject(); // <-- TEST EXPECTS THIS
+    }
+
+   
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException ex) {
+            return false;
+        }
     }
 }
