@@ -35,4 +35,4 @@ public class OpenApiConfig {
                 .schemaRequirement("bearerAuth", jwtScheme);
     }
 }
-kill -9 12345
+
