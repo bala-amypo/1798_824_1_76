@@ -29,7 +29,7 @@ public class OpenApiConfig {
                         .description("JWT secured backend APIs")
                 )
                 .servers(List.of(
-                        new Server().url("https://9220.pro604cr.amypo.ai")
+                        new Server().url("https://9189.32procr.amypo.ai/")
                 ))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .schemaRequirement("bearerAuth", jwtScheme);
